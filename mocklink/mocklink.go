@@ -25,6 +25,13 @@ func (h *Handle) RouteAdd(route *netlink.Route) error {
 	if err := validateRoute(route); err != nil {
 		return err
 	}
+
+	for _, rt := range h.routes {
+		if matchingRoutes(rt, route) {
+			return fmt.Errorf("route already exists")
+		}
+	}
+
 	h.routes = append(h.routes, route)
 	return nil
 }

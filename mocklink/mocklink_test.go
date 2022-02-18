@@ -123,3 +123,23 @@ func TestInvalidRoute(t *testing.T) {
 		t.Errorf("should be an error on empty route")
 	}
 }
+
+func TestDuplicateRoute(t *testing.T) {
+	ml := NewHandle()
+
+	dst1, _ := netlink.ParseIPNet("10.10.10.0/24")
+	rt1 := &netlink.Route{
+		LinkIndex: 5,
+		Dst:       dst1,
+	}
+
+	err := ml.RouteAdd(rt1)
+	if err != nil {
+		t.Errorf("error while adding first route: %v", err)
+	}
+
+	err = ml.RouteAdd(rt1)
+	if err == nil {
+		t.Errorf("should have failed to add duplicate route")
+	}
+}
