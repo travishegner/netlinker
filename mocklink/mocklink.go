@@ -49,8 +49,8 @@ func (h *Handle) RouteDel(route *netlink.Route) error {
 	return nil
 }
 
-func (h *Handle) RouteListFiltered(family int, route *netlink.Route, flags uint64) ([]*netlink.Route, error) {
-	results := make([]*netlink.Route, 0)
+func (h *Handle) RouteListFiltered(family int, route *netlink.Route, flags uint64) ([]netlink.Route, error) {
+	results := make([]netlink.Route, 0)
 
 	if route == nil {
 		route = &netlink.Route{}
@@ -69,7 +69,7 @@ func (h *Handle) RouteListFiltered(family int, route *netlink.Route, flags uint6
 		r1 := flaggedRouteAttrs(rt, flags)
 
 		if matchingRoutes(r1, qr) {
-			results = append(results, rt)
+			results = append(results, *rt)
 		}
 	}
 
