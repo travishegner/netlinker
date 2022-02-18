@@ -93,6 +93,10 @@ func flaggedRouteAttrs(route *netlink.Route, flags uint64) *netlink.Route {
 		qr.ILinkIndex = route.ILinkIndex
 	}
 
+	if flags&netlink.RT_FILTER_PROTOCOL != 0 {
+		qr.Protocol = route.Protocol
+	}
+
 	return qr
 }
 
