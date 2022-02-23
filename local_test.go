@@ -93,17 +93,17 @@ func TestAddFilterRoute(t *testing.T) {
 		t.Errorf("failed to add route to netlink: %v", err)
 	}
 
-	ml_routes, err := ml.RouteListFiltered(netlink.FAMILY_ALL, rt, netlink.RT_FILTER_DST|netlink.RT_FILTER_GW)
+	mlRoutes, err := ml.RouteListFiltered(netlink.FAMILY_ALL, rt, netlink.RT_FILTER_DST|netlink.RT_FILTER_GW)
 	if err != nil {
 		t.Errorf("failed to get filtered routes from mocklink")
 	}
 
-	nl_routes, err := nl.RouteListFiltered(netlink.FAMILY_ALL, rt, netlink.RT_FILTER_DST|netlink.RT_FILTER_GW)
+	nlRoutes, err := nl.RouteListFiltered(netlink.FAMILY_ALL, rt, netlink.RT_FILTER_DST|netlink.RT_FILTER_GW)
 	if err != nil {
 		t.Errorf("failed to get filtered routes from netlink")
 	}
 
-	if !reflect.DeepEqual(ml_routes, nl_routes) {
+	if !reflect.DeepEqual(mlRoutes, nlRoutes) {
 		t.Errorf("routes returned should be equal")
 	}
 }

@@ -15,12 +15,14 @@ type Handle struct {
 	//links     []*netlink.Link
 }
 
+//NewHandle returns a new mocklink handle
 func NewHandle() *Handle {
 	return &Handle{
 		routes: make([]*netlink.Route, 0),
 	}
 }
 
+//RouteAdd adds a new route to mocklink
 func (h *Handle) RouteAdd(route *netlink.Route) error {
 	if err := validateRoute(route); err != nil {
 		return err
@@ -36,6 +38,7 @@ func (h *Handle) RouteAdd(route *netlink.Route) error {
 	return nil
 }
 
+//RouteDel deletes a route from mocklink
 func (h *Handle) RouteDel(route *netlink.Route) error {
 	if err := validateRoute(route); err != nil {
 		return err
@@ -56,6 +59,7 @@ func (h *Handle) RouteDel(route *netlink.Route) error {
 	return nil
 }
 
+//RouteListFiltered returns a filtered list of routes from mocklink
 func (h *Handle) RouteListFiltered(family int, route *netlink.Route, flags uint64) ([]netlink.Route, error) {
 	results := make([]netlink.Route, 0)
 
